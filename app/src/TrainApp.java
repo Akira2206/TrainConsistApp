@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
 class Bogie {
     String type;
@@ -10,30 +9,26 @@ class Bogie {
         this.capacity = capacity;
     }
 
-    public String getType() { return type; }
-
-    @Override
-    public String toString() {
-        return "[Cap: " + capacity + "]";
-    }
+    public int getCapacity() { return capacity; }
 }
 
 public class TrainApp {
     public static void main(String[] args) {
         List<Bogie> train = Arrays.asList(
             new Bogie("Sleeper", 72),
-            new Bogie("AC-Chair", 56),
             new Bogie("Sleeper", 72),
+            new Bogie("AC-Chair", 56),
             new Bogie("First-Class", 24)
         );
 
-        System.out.println("--- UC9: Grouping Bogies by Category ---");
+        System.out.println("--- UC10: Calculating Total Seating Capacity ---");
 
-        Map<String, List<Bogie>> groupedByType = train.stream()
-            .collect(Collectors.groupingBy(Bogie::getType));
+        int totalSeats = train.stream()
+            .map(Bogie::getCapacity)
+            .reduce(0, (sum, cap) -> sum + cap);
 
-        groupedByType.forEach((type, list) -> {
-            System.out.println(type + " Bogies: " + list);
-        });
+
+        System.out.println("Total Seating Capacity for the Train: " + totalSeats);
+        System.out.println("Ready for passenger boarding.");
     }
 }
