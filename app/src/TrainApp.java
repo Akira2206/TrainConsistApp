@@ -1,20 +1,30 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+class Bogie {
+    String name;
+    int capacity;
+
+    Bogie(String name, int capacity) {
+        this.name = name;
+        this.capacity = capacity;
+    }
+
+    @Override
+    public String toString() {
+        return name + " (Capacity: " + capacity + ")";
+    }
+}
 
 public class TrainApp {
     public static void main(String[] args) {
-        System.out.println("--- UC6: Bogie Capacity Mapping (HashMap) ---");
+        List<Bogie> trainList = new ArrayList<>();
+        trainList.add(new Bogie("Sleeper-S1", 72));
+        trainList.add(new Bogie("AC-Chair-C1", 56));
+        trainList.add(new Bogie("First-Class-F1", 24));
 
-        Map<String, Integer> capacityMap = new HashMap<>();
+        trainList.sort((b1, b2) -> b2.capacity - b1.capacity);
 
-        capacityMap.put("Sleeper", 72);
-        capacityMap.put("AC-ChairCar", 56);
-        capacityMap.put("First-Class", 24);
-        capacityMap.put("Rectangular-Goods", 1000);
-
-        System.out.println("Bogie Capacity Directory:");
-        for (String type : capacityMap.keySet()) {
-            System.out.println("Type: " + type + " | Capacity: " + capacityMap.get(type));
-        }
+        System.out.println("Bogies Sorted by Capacity:");
+        trainList.forEach(System.out::println);
     }
 }
