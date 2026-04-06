@@ -1,20 +1,23 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class TrainApp {
     public static void main(String[] args) {
-        System.out.println("--- UC3: Unique Bogie ID Tracking (HashSet) ---");
+        System.out.println("--- UC4: Ordered Bogie ID Management (TreeSet) ---");
 
-        Set<String> bogieIds = new HashSet<>();
+        SortedSet<String> orderedIds = new TreeSet<>();
 
-        bogieIds.add("BG101");
-        bogieIds.add("BG102");
-        bogieIds.add("BG103");
+        orderedIds.add("BG105");
+        orderedIds.add("BG101");
+        orderedIds.add("BG103");
+        orderedIds.add("BG102");
 
-        System.out.println("Adding duplicate BG101...");
-        boolean isAdded = bogieIds.add("BG101"); 
+        System.out.println("Sorted Bogie IDs for Formation:");
+        for (String id : orderedIds) {
+            System.out.println("Positioning Bogie: " + id);
+        }
 
-        System.out.println("Was duplicate added? " + isAdded);
-        System.out.println("Unique Bogie IDs in System: " + bogieIds);
+        System.out.println("First Bogie: " + orderedIds.first());
+        System.out.println("Last Bogie: " + orderedIds.last());
     }
 }
