@@ -1,23 +1,19 @@
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class TrainApp {
     public static void main(String[] args) {
-        System.out.println("--- UC4: Ordered Bogie ID Management (TreeSet) ---");
+        System.out.println("--- UC5: Preserving Attachment Order (LinkedHashSet) ---");
 
-        SortedSet<String> orderedIds = new TreeSet<>();
+        Set<String> formation = new LinkedHashSet<>();
 
-        orderedIds.add("BG105");
-        orderedIds.add("BG101");
-        orderedIds.add("BG103");
-        orderedIds.add("BG102");
+        formation.add("Locomotive-L1");
+        formation.add("Passenger-S1");
+        formation.add("Passenger-S2");
+        formation.add("Goods-G1");
+        formation.add("Guard-Coach");
 
-        System.out.println("Sorted Bogie IDs for Formation:");
-        for (String id : orderedIds) {
-            System.out.println("Positioning Bogie: " + id);
-        }
-
-        System.out.println("First Bogie: " + orderedIds.first());
-        System.out.println("Last Bogie: " + orderedIds.last());
+        System.out.println("Final Train Formation Order:");
+        formation.forEach(bogie -> System.out.println("Attached: " + bogie));
     }
 }
