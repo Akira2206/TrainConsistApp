@@ -1,30 +1,38 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 class Bogie {
-    String name;
+    String type;
     int capacity;
 
-    Bogie(String name, int capacity) {
-        this.name = name;
+    Bogie(String type, int capacity) {
+        this.type = type;
         this.capacity = capacity;
     }
 
+    public int getCapacity() { return capacity; }
+
     @Override
     public String toString() {
-        return name + " (Capacity: " + capacity + ")";
+        return type + " (Seats: " + capacity + ")";
     }
 }
 
 public class TrainApp {
     public static void main(String[] args) {
-        List<Bogie> trainList = new ArrayList<>();
-        trainList.add(new Bogie("Sleeper-S1", 72));
-        trainList.add(new Bogie("AC-Chair-C1", 56));
-        trainList.add(new Bogie("First-Class-F1", 24));
+        List<Bogie> train = Arrays.asList(
+            new Bogie("Sleeper", 72),
+            new Bogie("AC-Chair", 56),
+            new Bogie("First-Class", 24),
+            new Bogie("Sleeper", 72)
+        );
 
-        trainList.sort((b1, b2) -> b2.capacity - b1.capacity);
+        System.out.println("--- UC8: Filtering High-Capacity Bogies (> 50 seats) ---");
 
-        System.out.println("Bogies Sorted by Capacity:");
-        trainList.forEach(System.out::println);
+        List<Bogie> highCapacityBogies = train.stream()
+            .filter(b -> b.getCapacity() > 50)
+            .collect(Collectors.toList());
+
+        highCapacityBogies.forEach(System.out::println);
     }
 }
