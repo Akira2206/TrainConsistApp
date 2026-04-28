@@ -1,13 +1,21 @@
 import java.util.*;
-import java.util.regex.*;
+import java.util.function.Predicate;
 
 class Bogie {
     String type;
     int capacity;
+    String cargoType;
+    boolean isCylindrical;
 
     Bogie(String type, int capacity) {
         this.type = type;
         this.capacity = capacity;
+    }
+
+    Bogie(String type, String cargoType, boolean isCylindrical) {
+        this.type = type;
+        this.cargoType = cargoType;
+        this.isCylindrical = isCylindrical;
     }
 
     public int getCapacity() { return capacity; }
@@ -15,33 +23,21 @@ class Bogie {
 
 public class TrainApp {
     public static void main(String[] args) {
-        List<Bogie> train = Arrays.asList(
-            new Bogie("Sleeper", 72),
-            new Bogie("Sleeper", 72),
-            new Bogie("AC-Chair", 56),
-            new Bogie("First-Class", 24)
+        List<Bogie> goodsTrain = Arrays.asList(
+            new Bogie("Wagon", "Coal", false),
+            new Bogie("Tanker", "Oil", true),
+            new Bogie("Tanker", "Gas", true)
         );
 
-        System.out.println("--- UC10: Calculating Total Seating Capacity ---");
-        int totalSeats = train.stream()
-            .map(Bogie::getCapacity)
-            .reduce(0, (sum, cap) -> sum + cap);
-        System.out.println("Total Seating Capacity for the Train: " + totalSeats);
+        System.out.println("--- UC12: Safety Compliance Check ---");
+        Predicate<Bogie> safetyRule = b -> !b.isCylindrical || (b.cargoType.equals("Oil") || b.cargoType.equals("Gas"));
 
-        System.out.println("\n--- UC11: Validate Train ID & Cargo Codes ---");
-        String trainID = "TRN-12345";
-        String cargoCode = "CRG99";
+        boolean isSafe = goodsTrain.stream().allMatch(safetyRule);
 
-        String trainRegex = "^TRN-\\d{5}$";
-        String cargoRegex = "^[A-Z]{3}\\d{2}$";
-
-        boolean isTrainValid = Pattern.matches(trainRegex, trainID);
-        boolean isCargoValid = Pattern.matches(cargoRegex, cargoCode);
-
-        if (isTrainValid && isCargoValid) {
-            System.out.println("Validation Successful: Train ID and Cargo Code are in correct format.");
+        if (isSafe) {
+            System.out.println("All goods bogies comply with safety regulations.");
         } else {
-            System.out.println("Validation Failed: Check ID/Code formats.");
+            System.out.println("Safety Alert: Hazardous cargo detected in improper container!");
         }
     }
 }
