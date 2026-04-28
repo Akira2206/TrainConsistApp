@@ -1,23 +1,22 @@
-import java.util.*;
+class InvalidCapacityException extends Exception {
+    public InvalidCapacityException(String message) { super(message); }
+}
+
+class Bogie {
+    int capacity;
+    Bogie(int capacity) throws InvalidCapacityException {
+        if (capacity <= 0) throw new InvalidCapacityException("Capacity must be greater than zero!");
+        this.capacity = capacity;
+    }
+}
 
 public class TrainApp {
     public static void main(String[] args) {
-        List<Integer> capacities = new ArrayList<>();
-        for (int i = 0; i < 100000; i++) capacities.add(i);
-
-        System.out.println("--- UC13: Performance Comparison ---");
-
-        long startLoop = System.nanoTime();
-        int sumLoop = 0;
-        for (int c : capacities) {
-            if (c % 2 == 0) sumLoop += c;
+        System.out.println("--- UC14: Enforcing Capacity Rules ---");
+        try {
+            Bogie b = new Bogie(-5);
+        } catch (InvalidCapacityException e) {
+            System.out.println("Error: " + e.getMessage());
         }
-        long endLoop = System.nanoTime();
-        System.out.println("Loop Time: " + (endLoop - startLoop) + " ns");
-
-        long startStream = System.nanoTime();
-        long sumStream = capacities.stream().filter(c -> c % 2 == 0).mapToInt(Integer::intValue).sum();
-        long endStream = System.nanoTime();
-        System.out.println("Stream Time: " + (endStream - startStream) + " ns");
     }
 }
