@@ -1,22 +1,18 @@
-class InvalidCapacityException extends Exception {
-    public InvalidCapacityException(String message) { super(message); }
-}
-
-class Bogie {
-    int capacity;
-    Bogie(int capacity) throws InvalidCapacityException {
-        if (capacity <= 0) throw new InvalidCapacityException("Capacity must be greater than zero!");
-        this.capacity = capacity;
-    }
-}
-
 public class TrainApp {
     public static void main(String[] args) {
-        System.out.println("--- UC14: Enforcing Capacity Rules ---");
+        System.out.println("--- UC15: Safe Cargo Assignment ---");
+        String cargo = "Chemicals";
+        boolean isSafeContainer = false;
+
         try {
-            Bogie b = new Bogie(-5);
-        } catch (InvalidCapacityException e) {
-            System.out.println("Error: " + e.getMessage());
+            if (!isSafeContainer) {
+                throw new Exception("Incompatible cargo for this bogie type!");
+            }
+            System.out.println("Cargo assigned: " + cargo);
+        } catch (Exception e) {
+            System.err.println("Assignment Failed: " + e.getMessage());
+        } finally {
+            System.out.println("Cleaning up assignment logs...");
         }
     }
 }
