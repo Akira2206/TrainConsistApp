@@ -1,26 +1,16 @@
-import java.util.Arrays;
+import java.util.*;
 
 public class TrainApp {
     public static void main(String[] args) {
-        String[] bogieIDs = {"A1", "A2", "B1", "B2", "S1"}; // Must be sorted
-        String searchKey = "B2";
-        
-        System.out.println("--- UC19: Binary Search ---");
-        int low = 0, high = bogieIDs.length - 1;
-        int result = -1;
+        List<String> emptyTrain = new ArrayList<>();
+        System.out.println("--- UC20: Search Safety Check ---");
 
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            int res = searchKey.compareTo(bogieIDs[mid]);
-
-            if (res == 0) {
-                result = mid;
-                break;
+        try {
+            if (emptyTrain.isEmpty()) {
+                throw new IllegalStateException("Cannot perform search: Train consists of zero bogies.");
             }
-            if (res > 0) low = mid + 1;
-            else high = mid - 1;
+        } catch (IllegalStateException e) {
+            System.err.println("Error: " + e.getMessage());
         }
-
-        System.out.println(result != -1 ? "Bogie found at index " + result : "Not found.");
     }
 }
